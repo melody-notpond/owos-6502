@@ -19,8 +19,8 @@ _start:
 	sta $FE
 
 	; Print the message
-	ldx #<message
-	ldy #>message
+	ldx #<options
+	ldy #>options
 	jsr puts
 
 ; loop forever
@@ -46,8 +46,8 @@ puts_loop:
 puts_rts:
 	rts
 
-message:
-	.bytes "Hewwo worwd! uwu", $0A, $00
+options:
+	.bytes "owOS Boot shell", $0A, "Please select an option", $0A, "  Boot from disc 0", $0A, "  Boot from disc 1", $0A, "  Recovery shell", $1B, "[", $01, "F", $1B, "[", $01, "F", $00
 
 .origin $fffc
 .word _start
