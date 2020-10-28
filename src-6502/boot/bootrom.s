@@ -31,9 +31,6 @@ _start:
 get_key:
 	jsr getc
 
-	; No key = no action
-	beq get_key
-
 	; ANSI escape character
 	cmp #$1B
 	beq move_arrow
@@ -41,6 +38,17 @@ get_key:
 	; Enter (newline)
 	cmp #$0A
 	bne get_key
+
+	; Get state
+	lda $04
+
+	; Recovery shell
+	cmp #$02
+	bne load_disc
+	jmp recovery_shell
+
+load_disc:
+	jmp load_disc
 
 ; Loop forever
 loop:
@@ -162,7 +170,11 @@ options:
 	.bytes "  Boot from disc 0"      , $0A,
 	.bytes "  Boot from disc 1"      , $0A,
 	.bytes "  Recovery shell"        ,
-	.bytes $1B, "[", $01, "F", $1B, "[", $01, "F", $00
+	.bytes $1B, "[F", $1B, "[F", $00
+
+
+recovery_shell:
+
 
 .origin $fffc
 .word _start

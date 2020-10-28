@@ -6,5 +6,5 @@ all: bootrom
 mkdirs:
 	-mkdir build-6502
 
-bootrom: src-6502/boot/bootrom.s
+bootrom: src-6502/boot/*
 	$(ASM) $(BOOTROM_ARGS) $?
