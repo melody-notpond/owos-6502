@@ -126,12 +126,7 @@ impl MemoryMap {
 		}
 
 		// Set flags
-		if self.uart_stat & 0b0000_1000 != 0 {
-			self.uart_stat |= 0b0000_0100;
-		} else {
-			self.uart_stat &= 0b1111_1011;
-			self.uart_stat |= 0b0000_1000;
-		}
+		self.uart_stat |= 0b0000_1000;
 	}
 }
 
@@ -173,9 +168,11 @@ impl Interface6502 for MemoryMap {
 						self.uart_data_rx = self.uart_data_buf.pop_front().unwrap();
 					} else {
 						self.uart_data_rx = 0;
+						self.uart_stat &= 0b1111_0111;
 					}
 
-					self.uart_stat &= 0b0111_0000;
+					self.uart_stat &= 0b0111_1000;
+
 					data
 				}
 				0x00fd => self.uart_stat,

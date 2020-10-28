@@ -3,6 +3,8 @@ BOOTROM_ARGS = -d -s F000 -o build-6502/bootrom.disc
 
 all: bootrom
 
-bootrom: src-6502/boot/bootrom.s
+mkdirs:
 	-mkdir build-6502
+
+bootrom: src-6502/boot/bootrom.s
 	$(ASM) $(BOOTROM_ARGS) $?
